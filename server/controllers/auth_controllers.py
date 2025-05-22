@@ -27,3 +27,25 @@ def register():
         cursor.close()
         conn.close()
 
+@auth.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
+
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        cursor.execute('SELECT * FROM users_list WHERE username = %s', (username,))
+        user = cursor.fetchone()
+
+        if user and checkPassword(user['password'], password):
+            return jsonify({'message': 'logged In successful'})
+
+    except:
+        return jsonify({'error': 'login Failed'})
+    finally:
+        cursor.close()
+        conn.close()
+

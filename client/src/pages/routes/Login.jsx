@@ -9,11 +9,17 @@ export default function Login() {
         password: "",
     });
 
+    const handleChange = async (e) => {
+        const { name, value } = e.target;
+        setLoginData({ ...loginData, [name]: value })
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         setIsLogging(true)
         try {   
+            const url = import.meta.env.VITE_URL;
             const res = await axios.post(`${url}/login`, loginData, {
                 headers: {
                     "Content-Type": "application/json"
@@ -24,8 +30,8 @@ export default function Login() {
             if (res.status === 200) {
                 console.log("login successful")
             }
-        } catch (e) {
-            console.log(e)
+        } catch {
+            console.log("registration failed")
         } finally {
             setIsLogging(false)
         }
@@ -37,14 +43,16 @@ export default function Login() {
                 <input  type="text" 
                         placeholder="username"
                         value={loginData.username}
-                        onChange={(e) => setLoginData({ ...loginData, username: e.target.value})}
+                        onChange={handleChange}
+                        name="username"
                         required
                 />
 
                 <input  type="password" 
                         placeholder="password"
                         value={loginData.password}
-                        onChange={(e) => setLoginData({ ...loginData, password: e.target.value})}
+                        onChange={handleChange}
+                        name="password"
                         required
                 />  
 

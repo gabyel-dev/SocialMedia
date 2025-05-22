@@ -11,6 +11,11 @@ export default function Register() {
         password: "",
     })
 
+    const handleChange = async (e) => {
+        const { name, value } = e.target;
+        setRegisterData({ ...registerData, [name]: value})
+    }
+
     const handleRegister = async (e) => {
         e.preventDefault();
 
@@ -41,17 +46,19 @@ export default function Register() {
                 <input  type="text" 
                         placeholder="username"
                         value={registerData.username}
-                        onChange={(e) => setRegisterData({ ...registerData, username: e.target.value})}
+                        onChange={handleChange}
+                        name="username"
                         required
                 />
 
                 <input  type="password" 
                         placeholder="password"
                         value={registerData.password}
-                        onChange={(e) => setRegisterData({ ...registerData, password: e.target.value})}
+                        onChange={handleChange}
+                        name="password"
                         required
                 />  
-                <button type="submit">Register</button>
+                <button type="submit" disabled={isRegistering} className={`${isRegistering ? "bg-gray-500" : "bg-blue-500"} `}> {isRegistering ? "Disabled" : "Register"}</button>
             </form>
 
             <Link to={'/login'}>Login</Link>
