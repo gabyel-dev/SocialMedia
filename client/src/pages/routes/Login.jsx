@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function Login() {
     const [isLogging, setIsLogging] = useState(false);
@@ -43,10 +44,14 @@ export default function Login() {
                 <input  type="password" 
                         placeholder="password"
                         value={loginData.password}
-                        onChange={(e) => setLoginData({ ...loginData, username: e.target.value})}
+                        onChange={(e) => setLoginData({ ...loginData, password: e.target.value})}
                         required
                 />  
+
+                <button type="submit">Login</button>
             </form>
+
+            <Link to={'/'}>Register</Link>
         </div>
     )
 }
