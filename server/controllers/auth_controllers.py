@@ -47,7 +47,9 @@ def login():
         user = cursor.fetchone()
 
         if user and checkPassword(user['password'], password):
-            return jsonify({'message': 'logged In successful'})
+            return jsonify({'message': 'logged In successful'}), 200
+        
+        return jsonify({'error': 'Invalid username or password'}), 401
 
     except:
         return jsonify({'error': 'login Failed'})

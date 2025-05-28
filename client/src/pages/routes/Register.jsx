@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faLock, faUser} from '@fortawesome/free-solid-svg-icons';
 import SuccessCard from "../../successfull_card";
+import NavAuth from "../../components/navbar_auth";
 
 export default function Register() {
     const [isRegistering, setIsRegistering] = useState(false);
@@ -64,6 +65,7 @@ export default function Register() {
     };
 
     useEffect(() => {
+        document.title = "Chattrix - Register";
         const isEmpty = registerData.password === "" || confirmPassword === "";
         if (isEmpty) {
             setCheckPassword(null); // null = no highlight yet
@@ -79,7 +81,11 @@ export default function Register() {
     }, [registerData.password, confirmPassword, registerData.username]);
 
     return (
+        <>
+        <div className="blur-bg w-full h-screen "></div>
+        <NavAuth />
         <div className="w-full h-screen flex flex-col justify-center items-center">
+            
             {success && (
                 <SuccessCard 
                     title={"Registration successful!"}
@@ -109,6 +115,7 @@ export default function Register() {
                             type="text"
                             name="username"
                             value={registerData.username}
+                            placeholder="e.g, johndoe"
                             onChange={handleChange}
                             required
                             className="w-full border-none focus:outline-none text-sm"
@@ -136,7 +143,7 @@ export default function Register() {
                     </div>
                 </fieldset>
 
-                <fieldset className={`border   rounded px-3 pb-3 pt-1 ${checkPassword === null
+                <fieldset className={`border rounded px-3 pb-3 pt-1 ${checkPassword === null
                                                                         ? "border-gray-300"
                                                                         : checkPassword
                                                                         ? "border-green-500" 
@@ -162,15 +169,16 @@ export default function Register() {
                 <button
                     type="submit"
                     disabled={isRegistering}
-                    className={`${isRegistering ? "bg-gray-500" : "bg-blue-500"} rounded-[7px] py-2 px-[32px] text-white cursor-pointer`}
+                    className={`${isRegistering ? "bg-gray-500" : "bg-blue-500"} rounded-[7px] py-2 px-[32px] text-white cursor-pointer hover:bg-blue-600 transition`}
                 >
                     {isRegistering ? "Registering..." : "Register"}
                 </button>
             </form>
 
-            <Link to="/login" className="mt-4 text-sm text-blue-600 hover:underline">
+            <Link to="/" className="mt-4 text-sm text-blue-600 hover:underline">
                 Already have an account?
             </Link>
         </div>
+        </>
     );
 }

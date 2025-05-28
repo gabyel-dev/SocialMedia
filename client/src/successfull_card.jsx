@@ -1,19 +1,16 @@
 import { Link } from "react-router-dom";
-import SuccessModel from "./successfull"; // the class
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
 
 const check = <FontAwesomeIcon icon={faCircleCheck} className="text-[4em] text-green-700 font-thin" />  
 
 export default function SuccessCard({ title, route, linkTitle, description }) {
-    const successInfo = new SuccessModel(title);
-
     return (
         <div className="w-full h-screen absolute flex justify-center items-center bg-black/30 z-50">
             <div className="w-[300px] h-fit p-8 flex flex-col gap-4  justify-center items-center text-center bg-gray-100 border border-gray-300 rounded-xl shadow-md">
                 {check}
                 <p className="text-green-600 text-xl mb-2 font-semibold">
-                    {successInfo.title}
+                    {title}
                 </p>
                 <p className="text-gray-500 text-sm">
                     {description}
