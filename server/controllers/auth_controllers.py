@@ -15,14 +15,20 @@ def register():
     cursor = conn.cursor()
 
     try:
+        cursor.execute('SELECT username from users_list WHERE username = %s', (username,))
+        user = cursor.fetchone()
+
+        if user:
+            return jsonify({'error': 'Username already used'}), 409
+
         cursor.execute('INSERT INTO users_list (username, password) VALUES (%s, %s)', (username, hashPassword(password)))
         conn.commit()
 
         if cursor.rowcount > 0:
-            return jsonify({'message': 'registered successfully'})
+            return jsonify({'message': 'registered successfully'}), 200
         
     except:
-        return jsonify({'error': 'failed to insert data'})
+        return jsonify({'error': 'failed to insert data'}), 500
     finally:
         cursor.close()
         conn.close()
