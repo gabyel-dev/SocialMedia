@@ -3,8 +3,10 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faLock, faUser} from '@fortawesome/free-solid-svg-icons';
+import { faEyeSlash, faEye } from "@fortawesome/free-regular-svg-icons";
 import SuccessCard from "../../successfull_card";
 import NavAuth from "../../components/navbar_auth";
+
 
 export default function Register() {
     const [isRegistering, setIsRegistering] = useState(false);
@@ -17,6 +19,17 @@ export default function Register() {
     const [checkPassword, setCheckPassword] = useState(false);
     const [checkUsername, setCheckUsername] = useState(false);
     const [success, setSuccess] = useState(false);
+    const [show1, setShow1] = useState(false);
+    const [show2, setShow2] = useState(false);
+
+    const handleShow1 = (e) => {
+        e.preventDefault();
+        setShow1(!show1)
+    }
+    const handleShow2 = (e) => {
+        e.preventDefault();
+        setShow2(!show2)
+    }
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -26,11 +39,12 @@ export default function Register() {
     const handleRegister = async (e) => {
         e.preventDefault();
 
-        if (registerData.password !== confirmPassword) {
+        const { username, password } = registerData;
+
+        if (password !== confirmPassword) {
             setError("✕ Password must be the same")
             return;
-        } 
-
+        }
         setIsRegistering(true);
         setError("")
 
@@ -66,19 +80,34 @@ export default function Register() {
 
     useEffect(() => {
         document.title = "Chattrix - Register";
-        const isEmpty = registerData.password === "" || confirmPassword === "";
+    
+        const { username, password } = registerData;
+    
+        const isEmpty = password.trim() === "" || confirmPassword.trim() === "";
+    
         if (isEmpty) {
-            setCheckPassword(null); // null = no highlight yet
-            setError("")
+            setCheckPassword(null);
+            setError(""); // No error if fields are empty
         } else {
-            setCheckPassword(registerData.password === confirmPassword);
+            if (password.length < 8) {
+                setError("Password must be at least 8 characters");
+                setCheckPassword(false);
+            } else if (password !== confirmPassword) {
+                setError("✕ Password must be the same");
+                setCheckPassword(false);
+            } else {
+                setError("");
+                setCheckPassword(true);
+            }
         }
-
-        if (registerData.username === "") {
-            setCheckUsername(null); // no highlight yet
-            setError("")
+    
+        // Username check (optional visual cue logic)
+        if (username === "") {
+            setCheckUsername(null);
         }
+    
     }, [registerData.password, confirmPassword, registerData.username]);
+    
 
     return (
         <>
@@ -89,7 +118,7 @@ export default function Register() {
             {success && (
                 <SuccessCard 
                     title={"Registration successful!"}
-                    route={"/login"}
+                    route={"/"}
                     linkTitle={"continue"}
                     description={"Your account has been created successfully. You can now log in to continue."}
                 />
@@ -129,10 +158,11 @@ export default function Register() {
                                                                         ? "border-green-500" 
                                                                         : "border-red-500"}`}>
                     <legend className="text-[12px] text-gray-500 px-2">Password</legend>
-                    <div className="flex items-center justify-center gap-2.5">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-center gap-2.5">
                         {<FontAwesomeIcon icon={faLock} className="text-sm text-gray-500" />}
                         <input
-                            type="password"
+                            type={show1 ? "text" : "password"}
                             name="password"
                             value={registerData.password}
                             onChange={handleChange}
@@ -140,6 +170,11 @@ export default function Register() {
                             required
                             className="w-full border-none focus:outline-none text-sm"
                         />
+                    </div>
+                        <button onClick={handleShow1}>
+                            {!show1 ? <FontAwesomeIcon icon={faEye} className="text-gray-400" />
+                                   : <FontAwesomeIcon icon={faEyeSlash} className="text-gray-400" />}
+                        </button>
                     </div>
                 </fieldset>
 
@@ -149,16 +184,22 @@ export default function Register() {
                                                                         ? "border-green-500" 
                                                                         : "border-red-500"}`}>
                     <legend className="text-[12px] text-gray-500 px-2">Confirm Password</legend>
-                    <div className="flex items-center justify-center gap-2.5">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-center gap-2.5">
                         {<FontAwesomeIcon icon={faLock} className="text-sm text-gray-500" />}
                         <input
-                            type="password"
+                            type={show2 ? "text" : "password"}
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             placeholder="••••••••"
                             required
                             className="w-full border-none focus:outline-none text-sm"
                         />
+                    </div>
+                        <button type="button" onClick={handleShow2}>
+                            {!show2 ? <FontAwesomeIcon icon={faEye} className="text-gray-400" />
+                                   : <FontAwesomeIcon icon={faEyeSlash} className="text-gray-400" />}
+                        </button>
                     </div>
                 </fieldset>
 
@@ -168,8 +209,8 @@ export default function Register() {
 
                 <button
                     type="submit"
-                    disabled={isRegistering}
-                    className={`${isRegistering ? "bg-gray-500" : "bg-blue-500"} rounded-[7px] py-2 px-[32px] text-white cursor-pointer hover:bg-blue-600 transition`}
+                    disabled={success}
+                    className={`${isRegistering ? "bg-gray-500" : "bg-blue-500"} ${success && "bg-gray-500"} rounded-[7px] py-2 px-[32px] text-white cursor-pointer hover:bg-blue-600 transition`}
                 >
                     {isRegistering ? "Registering..." : "Register"}
                 </button>

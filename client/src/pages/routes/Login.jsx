@@ -3,7 +3,9 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faLock, faUser} from '@fortawesome/free-solid-svg-icons';
+import { faEyeSlash, faEye } from "@fortawesome/free-regular-svg-icons";
 import NavAuth from "../../components/navbar_auth";
+import Error from "../../components/error";
 
 
 export default function Login() {
@@ -13,6 +15,13 @@ export default function Login() {
         password: "",
     });
     const [error, setError] = useState("")
+    const [show, setShow] = useState(false)
+    const [errorAppear, setErrorAppear] = useState(false)
+
+    const handleShow = (e) => {
+        e.preventDefault();
+        setShow(!show);
+    }
 
     const handleChange = async (e) => {
         const { name, value } = e.target;
@@ -40,12 +49,16 @@ export default function Login() {
         } catch (err) {
             if (err.response && (err.response.status === 401)) {
                 setError("Invalid Credentials");
+                setTimeout(() => setError(""), 3500)
+                setErrorAppear(true)
+                setTimeout(() => setErrorAppear(false), 3500)
             } else {
                 setError("Something went wrong. Please try again.");
             }
             console.log("Login Failed", err);
         } finally {
             setIsLogging(false)
+
         }
     }
 
@@ -61,19 +74,23 @@ export default function Login() {
         <div className="blur-bg w-full h-screen "></div>
             <NavAuth />
                 <div className="w-full h-screen flex flex-col justify-center items-center">
+                    {errorAppear && (
+                        <Error error={'Invalid Credentials'} />
+                    )}
                     <div className="flex flex-col text-center mb-6">
                         <h1 className="text-2xl font-bold">Sign In to Chattrix</h1>
                     </div>
         
                     <form
                         onSubmit={handleSubmit}
-                        className="w-[250px] min-w-[200px] max-w-[300px] flex flex-col gap-4"
+                        className="w-[250px] min-w-[200px] max-w-[300px] flex flex-col "
                     >
-                        <fieldset className={`border rounded px-3 pb-3 pt-1 border-gray-300 focus-within:border-blue-500`}>
+                        <fieldset className={`border rounded px-3 pb-3 pt-1 border-gray-300 focus-within:border-blue-500 mb-4`}>
                             <legend className="text-[12px] text-gray-500 px-2">Username</legend>
                             <div className="flex items-center justify-center gap-2.5">
                                 {<FontAwesomeIcon icon={faUser} className="text-sm text-gray-500" />}
                                 <input
+                                    aria-label="username"
                                     type="text"
                                     name="username"
                                     value={loginData.username}
@@ -87,30 +104,36 @@ export default function Login() {
         
                         <fieldset className={`border rounded px-3 pb-3 pt-1 border-gray-300 focus-within:border-blue-500`}>
                             <legend className="text-[12px] text-gray-500 px-2">Password</legend>
-                            <div className="flex items-center justify-center gap-2.5">
-                                {<FontAwesomeIcon icon={faLock} className="text-sm text-gray-500" />}
-                                <input
-                                    type="password"
-                                    name="password"
-                                    value={loginData.password}
-                                    onChange={handleChange}
-                                    placeholder="••••••••"
-                                    required
-                                    className="w-full border-none focus:outline-none text-sm"
-                                />
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center justify-center gap-2.5">
+                                    {<FontAwesomeIcon icon={faLock} className="text-sm text-gray-500" />}
+                                        <input
+                                        aria-label="password"
+                                        type={show ? "text" : "password"}
+                                        name="password"
+                                        value={loginData.password}
+                                        onChange={handleChange}
+                                        placeholder="••••••••"
+                                        required
+                                        className="w-full border-none focus:outline-none text-sm"
+                                        />
+                                </div>
+                                <button type="button" onClick={handleShow}>
+                                    {!show ? <FontAwesomeIcon icon={faEye} className="text-gray-400" />
+                                           : <FontAwesomeIcon icon={faEyeSlash} className="text-gray-400" />}
+                                </button>
                             </div>
                         </fieldset>
         
-                        <div className="text-red-500 text-[12px]">
-                        {error}
-                        </div>
+                            <div className="w-full relative flex justify-end py-1 pb-4 underline text-blue-500   ">
+                                <Link to={'/forgot_password'} className=" text-[12px]">forgot password</Link>
+                            </div>
         
                         <button
-                            type="submit"
                             disabled={isLogging}
                             className={`${isLogging ? "bg-gray-500" : "bg-blue-500"} rounded-[7px] py-2 px-[32px] text-white cursor-pointer hover:bg-blue-600 transition`}
                         >
-                            {isLogging ? "LoggingIn..." : "Login"}
+                            {isLogging ? "Logging in..." : "Login"}
                         </button>
                     </form>
         
