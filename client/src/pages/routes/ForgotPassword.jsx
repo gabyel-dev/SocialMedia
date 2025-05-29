@@ -165,7 +165,7 @@ export default function ForgotPassword() {
                                                                         : checkPasswordSame
                                                                         ? "border-red-500" 
                                                                         : "border-green-500"}`}>
-                    <legend className="text-[12px] text-gray-500 px-2">Password</legend>
+                    <legend className="text-[12px] text-gray-500 px-2">Current Password</legend>
                     <div className="flex items-center justify-between">
                         <div className="flex items-center justify-center gap-2.5">
                         {<FontAwesomeIcon icon={faLock} className="text-sm text-gray-500" />}
@@ -179,7 +179,7 @@ export default function ForgotPassword() {
                             className="w-full border-none focus:outline-none text-sm"
                         />
                     </div>
-                        <button type="button" onClick={handleShow1}>
+                        <button type="button" onClick={handleShow1} className="cursor-pointer">
                             {!show1 ? <FontAwesomeIcon icon={faEye} className="text-gray-400" />
                                    : <FontAwesomeIcon icon={faEyeSlash} className="text-gray-400" />}
                         </button>
@@ -205,7 +205,7 @@ export default function ForgotPassword() {
                             className="w-full border-none focus:outline-none text-sm"
                         />
                     </div>
-                        <button type="button" onClick={handleShow2}>
+                        <button type="button" onClick={handleShow2} className="cursor-pointer">
                             {!show2 ? <FontAwesomeIcon icon={faEye} className="text-gray-400" />
                                    : <FontAwesomeIcon icon={faEyeSlash} className="text-gray-400" />}
                         </button>

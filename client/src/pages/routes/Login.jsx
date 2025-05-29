@@ -118,7 +118,7 @@ export default function Login() {
                                         className="w-full border-none focus:outline-none text-sm"
                                         />
                                 </div>
-                                <button type="button" onClick={handleShow}>
+                                <button type="button" onClick={handleShow} className="cursor-pointer">
                                     {!show ? <FontAwesomeIcon icon={faEye} className="text-gray-400" />
                                            : <FontAwesomeIcon icon={faEyeSlash} className="text-gray-400" />}
                                 </button>

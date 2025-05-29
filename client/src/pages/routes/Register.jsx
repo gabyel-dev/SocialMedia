@@ -171,7 +171,7 @@ export default function Register() {
                             className="w-full border-none focus:outline-none text-sm"
                         />
                     </div>
-                        <button onClick={handleShow1}>
+                        <button onClick={handleShow1} className="cursor-pointer">
                             {!show1 ? <FontAwesomeIcon icon={faEye} className="text-gray-400" />
                                    : <FontAwesomeIcon icon={faEyeSlash} className="text-gray-400" />}
                         </button>
@@ -196,7 +196,7 @@ export default function Register() {
                             className="w-full border-none focus:outline-none text-sm"
                         />
                     </div>
-                        <button type="button" onClick={handleShow2}>
+                        <button type="button" onClick={handleShow2} className="cursor-pointer">
                             {!show2 ? <FontAwesomeIcon icon={faEye} className="text-gray-400" />
                                    : <FontAwesomeIcon icon={faEyeSlash} className="text-gray-400" />}
                         </button>
