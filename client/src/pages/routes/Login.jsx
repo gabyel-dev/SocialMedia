@@ -6,6 +6,7 @@ import {faLock, faUser} from '@fortawesome/free-solid-svg-icons';
 import { faEyeSlash, faEye } from "@fortawesome/free-regular-svg-icons";
 import NavAuth from "../../components/navbar_auth";
 import Error from "../../components/error";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Login() {
@@ -17,6 +18,7 @@ export default function Login() {
     const [error, setError] = useState("")
     const [show, setShow] = useState(false)
     const [errorAppear, setErrorAppear] = useState(false)
+    const navigate = useNavigate()
 
     const handleShow = (e) => {
         e.preventDefault();
@@ -44,6 +46,7 @@ export default function Login() {
             if (res.status === 200 ) {
                 console.log("login successful")
             }
+            navigate('/home')
 
             
         } catch (err) {
@@ -71,7 +74,7 @@ export default function Login() {
 
     return (
         <>
-        <div className="blur-bg w-full h-screen "></div>
+        <div className="blur-bg w-full h-screen" />
             <NavAuth />
                 <div className="w-full h-screen flex flex-col justify-center items-center">
                     {errorAppear && (

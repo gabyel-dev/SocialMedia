@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faLock, faUser} from '@fortawesome/free-solid-svg-icons';
 import { faEyeSlash, faEye } from "@fortawesome/free-regular-svg-icons";
-import SuccessCard from "../../successfull_card";
+import SuccessCard from "../../components/successfull_card";
 import NavAuth from "../../components/navbar_auth";
 import Error from "../../components/error";
 

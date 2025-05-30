@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VetBot - AI Animal Health Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        vetbotPrimary: '#4F46E5',
+                        vetbotSecondary: '#10B981',
+                        vetbotDark: '#1F2937',
+                        vetbotLight: '#F9FAFB',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .chat-container {
+            height: calc(100vh - 200px);
+        }
+        @media (max-width: 768px) {
+            .chat-container {
+                height: calc(100vh - 160px);
+            }
+        }
+    </style>
+</head>
+<body class="bg-vetbotLight">
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-paw text-vetbotPrimary text-2xl mr-2"></i>
+                        <span class="text-xl font-bold text-vetbotDark">VetBot</span>
+                    </div>
+                </div>
+                <div class="hidden sm:ml-6 sm:flex sm:items-center space-x-8">
+                    <a href="#" class="text-vetbotDark hover:text-vetbotPrimary px-3 py-2 text-sm font-medium">Home</a>
+                    <a href="#" class="text-vetbotDark hover:text-vetbotPrimary px-3 py-2 text-sm font-medium">How it Works</a>
+                    <a href="#" class="text-vetbotDark hover:text-vetbotPrimary px-3 py-2 text-sm font-medium">About</a>
+                    <a href="#" class="text-vetbotDark hover:text-vetbotPrimary px-3 py-2 text-sm font-medium">Contact</a>
+                </div>
+                <div class="flex items-center">
+                    <button class="bg-vetbotPrimary hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                        Sign In
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="bg-white">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 lg:py-16">
+            <div class="lg:grid lg:grid-cols-2 lg:gap-8 lg:items-center">
+                <div>
+                    <h1 class="text-4xl font-extrabold tracking-tight text-vetbotDark sm:text-5xl">
+                        <span class="block">AI-Powered Animal</span>
+                        <span class="block text-vetbotPrimary">Health Diagnosis</span>
+                    </h1>
+                    <p class="mt-3 max-w-3xl text-lg text-gray-500">
+                        VetBot uses advanced artificial intelligence to help identify potential health issues in your pets and livestock through image analysis and real-time chat support.
+                    </p>
+                    <div class="mt-8 sm:flex">
+                        <div class="rounded-md shadow">
+                            <a href="#chat-section" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-vetbotPrimary hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
+                                Try VetBot Now
+                            </a>
+                        </div>
+                        <div class="mt-3 rounded-md shadow sm:mt-0 sm:ml-3">
+                            <a href="#" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-vetbotPrimary bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10">
+                                Learn More
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-12 lg:mt-0">
+                    <div class="relative rounded-lg overflow-hidden">
+                        <img class="w-full rounded-lg" src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1064&q=80" alt="Veterinarian examining a dog">
+                        <div class="absolute inset-0 bg-vetbotPrimary opacity-20"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Chat Section -->
+    <div id="chat-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="md:flex">
+                <!-- Image Upload Section -->
+                <div class="md:w-1/3 bg-vetbotDark p-6 flex flex-col">
+                    <h2 class="text-xl font-semibold text-white mb-4">Upload Animal Image</h2>
+                    <div class="flex-1 flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 mb-4">
+                        <i class="fas fa-cloud-upload-alt text-4xl text-gray-300 mb-3"></i>
+                        <p class="text-gray-300 text-center mb-4">Drag & drop an image of your animal here or click to browse</p>
+                        <input type="file" id="animal-image" class="hidden" accept="image/*">
+                        <label for="animal-image" class="bg-vetbotPrimary hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium cursor-pointer">
+                            Select Image
+                        </label>
+                    </div>
+                    <div class="bg-gray-800 rounded-lg p-4">
+                        <h3 class="text-white font-medium mb-2">Image Analysis Results</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <div class="flex justify-between text-sm text-gray-300 mb-1">
+                                    <span>Skin Condition</span>
+                                    <span>85% Confidence</span>
+                                </div>
+                                <div class="w-full bg-gray-700 rounded-full h-2">
+                                    <div class="bg-vetbotSecondary h-2 rounded-full" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm text-gray-300 mb-1">
+                                    <span>Eye Health</span>
+                                    <span>72% Confidence</span>
+                                </div>
+                                <div class="w-full bg-gray-700 rounded-full h-2">
+                                    <div class="bg-vetbotSecondary h-2 rounded-full" style="width: 72%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm text-gray-300 mb-1">
+                                    <span>General Wellness</span>
+                                    <span>91% Confidence</span>
+                                </div>
+                                <div class="w-full bg-gray-700 rounded-full h-2">
+                                    <div class="bg-vetbotSecondary h-2 rounded-full" style="width: 91%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Chat Interface -->
+                <div class="md:w-2/3 flex flex-col">
+                    <div class="p-4 border-b border-gray-200 bg-gray-50">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <div class="h-10 w-10 rounded-full bg-vetbotPrimary flex items-center justify-center">
+                                    <i class="fas fa-robot text-white"></i>
+                                </div>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-sm font-medium text-gray-900">VetBot Assistant</h3>
+                                <div class="flex items-center">
+                                    <span class="h-2 w-2 rounded-full bg-green-400 mr-1"></span>
+                                    <span class="text-xs text-gray-500">Online</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-container overflow-y-auto p-4 space-y-4 flex-1">
+                        <!-- Chat messages will appear here -->
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-vetbotPrimary flex items-center justify-center">
+                                <i class="fas fa-robot text-white"></i>
+                            </div>
+                            <div class="ml-3">
+                                <div class="bg-gray-100 rounded-lg py-2 px-4">
+                                    <p class="text-sm text-gray-800">Hello! I'm VetBot, your AI-powered animal health assistant. You can upload an image of your animal or describe their symptoms, and I'll do my best to help identify potential health issues.</p>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">Just now</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start justify-end">
+                            <div class="mr-3 text-right">
+                                <div class="bg-vetbotPrimary rounded-lg py-2 px-4">
+                                    <p class="text-sm text-white">My dog has been scratching a lot and has red patches on his skin. I'll upload a photo.</p>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">Just now</p>
+                            </div>
+                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center">
+                                <i class="fas fa-user text-gray-600"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-vetbotPrimary flex items-center justify-center">
+                                <i class="fas fa-robot text-white"></i>
+                            </div>
+                            <div class="ml-3">
+                                <div class="bg-gray-100 rounded-lg py-2 px-4">
+                                    <p class="text-sm text-gray-800">Thank you for the image. My analysis shows an 85% likelihood of dermatitis. I recommend consulting with a veterinarian for proper diagnosis and treatment. In the meantime, you might want to:</p>
+                                    <ul class="list-disc pl-5 mt-2 space-y-1">
+                                        <li class="text-sm text-gray-800">Use a mild, hypoallergenic shampoo</li>
+                                        <li class="text-sm text-gray-800">Prevent your dog from excessive scratching</li>
+                                        <li class="text-sm text-gray-800">Monitor for any worsening symptoms</li>
+                                    </ul>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">Just now</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Message Input -->
+                    <div class="p-4 border-t border-gray-200">
+                        <div class="flex items-center">
+                            <div class="flex-1">
+                                <input type="text" placeholder="Type your message..." class="w-full border border-gray-300 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-vetbotPrimary focus:border-transparent">
+                            </div>
+                            <button class="ml-3 bg-vetbotPrimary hover:bg-indigo-700 text-white p-2 rounded-full">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                            <button class="ml-2 bg-gray-200 hover:bg-gray-300 text-gray-700 p-2 rounded-full">
+                                <i class="fas fa-camera"></i>
+                            </button>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2">VetBot provides preliminary health assessments only. Always consult a licensed veterinarian for professional diagnosis and treatment.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="bg-gray-50 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:text-center">
+                <h2 class="text-base text-vetbotPrimary font-semibold tracking-wide uppercase">Features</h2>
+                <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-vetbotDark sm:text-4xl">
+                    How VetBot Helps Your Animals
+                </p>
+            </div>
+
+            <div class="mt-10">
+                <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-center justify-center h-12 w-12 rounded-md bg-vetbotPrimary text-white">
+                                <i class="fas fa-camera-retro"></i>
+                            </div>
+                            <h3 class="mt-4 text-lg font-medium text-gray-900">Image Analysis</h3>
+                            <p class="mt-2 text-base text-gray-500">
+                                Upload photos of your animal's symptoms and receive instant AI-powered analysis of potential health issues.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-center justify-center h-12 w-12 rounded-md bg-vetbotPrimary text-white">
+                                <i class="fas fa-comment-medical"></i>
+                            </div>
+                            <h3 class="mt-4 text-lg font-medium text-gray-900">Real-time Chat</h3>
+                            <p class="mt-2 text-base text-gray-500">
+                                Chat with our AI assistant to describe symptoms and receive guidance on possible conditions and care.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-center justify-center h-12 w-12 rounded-md bg-vetbotPrimary text-white">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <h3 class="mt-4 text-lg font-medium text-gray-900">Vast Knowledge Base</h3>
+                            <p class="mt-2 text-base text-gray-500">
+                                Access information on hundreds of animal diseases, symptoms, and treatments for various species.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-center justify-center h-12 w-12 rounded-md bg-vetbotPrimary text-white">
+                                <i class="fas fa-bell"></i>
+                            </div>
+                            <h3 class="mt-4 text-lg font-medium text-gray-900">Emergency Alerts</h3>
+                            <p class="mt-2 text-base text-gray-500">
+                                Get immediate notifications if your animal's symptoms indicate a potentially serious condition.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-center justify-center h-12 w-12 rounded-md bg-vetbotPrimary text-white">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <h3 class="mt-4 text-lg font-medium text-gray-900">Vet Locator</h3>
+                            <p class="mt-2 text-base text-gray-500">
+                                Find nearby veterinary clinics based on your location for professional follow-up care.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-center justify-center h-12 w-12 rounded-md bg-vetbotPrimary text-white">
+                                <i class="fas fa-history"></i>
+                            </div>
+                            <h3 class="mt-4 text-lg font-medium text-gray-900">Health History</h3>
+                            <p class="mt-2 text-base text-gray-500">
+                                Track your animal's health over time with saved records of previous consultations and analyses.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-vetbotDark">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-300 tracking-wider uppercase">VetBot</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">About</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Careers</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-300 tracking-wider uppercase">Support</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Help Center</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Privacy Policy</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-300 tracking-wider uppercase">Animals</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Dogs</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Cats</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Livestock</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-300 tracking-wider uppercase">Connect</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Facebook</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Twitter</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Instagram</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-12 border-t border-gray-700 pt-8">
+                <p class="text-base text-gray-400 text-center">
+                    &copy; 2025 VetBot AI. All rights reserved.
+                </p>
+                <p class="mt-2 text-sm text-gray-400 text-center">
+                    VetBot provides AI-powered health assessments only and is not a substitute for professional veterinary care.
+                </p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

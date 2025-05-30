@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faLock, faUser} from '@fortawesome/free-solid-svg-icons';
 import { faEyeSlash, faEye } from "@fortawesome/free-regular-svg-icons";
-import SuccessCard from "../../successfull_card";
+import SuccessCard from "../../components/successfull_card";
 import NavAuth from "../../components/navbar_auth";
 
 
@@ -111,7 +111,7 @@ export default function Register() {
 
     return (
         <>
-        <div className="blur-bg w-full h-screen "></div>
+        <div className="blur-bg w-full h-screen " />
         <NavAuth />
         <div className="w-full h-screen flex flex-col justify-center items-center">
             
@@ -171,7 +171,7 @@ export default function Register() {
                             className="w-full border-none focus:outline-none text-sm"
                         />
                     </div>
-                        <button onClick={handleShow1} className="cursor-pointer">
+                        <button type="button" onClick={handleShow1} className="cursor-pointer">
                             {!show1 ? <FontAwesomeIcon icon={faEye} className="text-gray-400" />
                                    : <FontAwesomeIcon icon={faEyeSlash} className="text-gray-400" />}
                         </button>
