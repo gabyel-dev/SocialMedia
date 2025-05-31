@@ -11,6 +11,8 @@ def register():
     data = request.get_json()
     username = data.get('username')
     password = data.get('password')
+    fname = data.get('first_name')
+    lname = data.get('last_name')
 
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -22,7 +24,7 @@ def register():
         if user:
             return jsonify({'error': 'Username already used'}), 409
 
-        cursor.execute('INSERT INTO users_list (username, password) VALUES (%s, %s)', (username, hashPassword(password)))
+        cursor.execute('INSERT INTO users_list (username, password, first_name, last_name) VALUES (%s, %s, %s, %s)', (username, hashPassword(password), fname, lname))
         conn.commit()
 
         if cursor.rowcount > 0:
@@ -90,3 +92,28 @@ def reset_password():
         cursor.close()
         conn.close()
 
+#search
+@auth.route('/search', methods=['GET' ])
+def search():
+    query = request.args.get('query', '').strip()
+
+    if not query:
+        return jsonify({"users": []})
+    
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute('SELECT id, first_name, last_name FROM users_list WHERE first_name ILIKE %s OR last_name ILIKE %s', (f"%{query}%", f"%{query}%",))
+        users = cursor.fetchall()
+        print(users)
+
+        return jsonify({'users': users})
+    
+    except Exception as e:
+        print("Search error:", e)  # Debugging
+        return jsonify({"error": str(e)}), 500
+
+    finally:
+        cursor.close()
+        conn.close()

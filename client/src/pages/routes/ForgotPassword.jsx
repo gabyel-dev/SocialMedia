@@ -142,7 +142,7 @@ export default function ForgotPassword() {
 
             <form
                 onSubmit={handleChangePassword}
-                className="w-[250px] min-w-[200px] max-w-[300px] flex flex-col gap-4"
+                className="w-[250px] md:w-[280px] lg:w-[290px] xl:[300px] flex flex-col gap-4"
             >
                 <fieldset className={`border border-gray-300 rounded px-3 pb-3 pt-1`}>
                     <legend className="text-[12px] text-gray-500 px-2">Username</legend>
@@ -160,7 +160,7 @@ export default function ForgotPassword() {
                     </div>
                 </fieldset>
 
-                <fieldset className={`border rounded px-3 pb-3 pt-1 ${checkPasswordSame === null
+                <fieldset className={`border rounded px-3 pb-3 pt-1  ${checkPasswordSame === null
                                                                         ? "border-gray-300"
                                                                         : checkPasswordSame
                                                                         ? "border-red-500" 

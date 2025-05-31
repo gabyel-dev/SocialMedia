@@ -86,7 +86,7 @@ export default function Login() {
         
                     <form
                         onSubmit={handleSubmit}
-                        className="w-[250px] min-w-[200px] max-w-[300px] flex flex-col "
+                        className="w-[250px] md:w-[280px] lg:w-[290px] xl:[300px] flex flex-col "
                     >
                         <fieldset className={`border rounded px-3 pb-3 pt-1 border-gray-300 focus-within:border-blue-500 mb-4`}>
                             <legend className="text-[12px] text-gray-500 px-2">Username</legend>
@@ -105,12 +105,12 @@ export default function Login() {
                             </div>
                         </fieldset>
         
-                        <fieldset className={`border rounded px-3 pb-3 pt-1 border-gray-300 focus-within:border-blue-500`}>
+                        <fieldset className="border rounded px-3 pb-3 pt-1 border-gray-300 focus-within:border-blue-500">
                             <legend className="text-[12px] text-gray-500 px-2">Password</legend>
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center justify-center gap-2.5">
-                                    {<FontAwesomeIcon icon={faLock} className="text-sm text-gray-500" />}
-                                        <input
+                            <div className="flex items-center justify-between w-full">
+                                <div className="flex items-center gap-2.5 w-full">
+                                    <FontAwesomeIcon icon={faLock} className="text-sm text-gray-500" />
+                                    <input
                                         aria-label="password"
                                         type={show ? "text" : "password"}
                                         name="password"
@@ -118,15 +118,17 @@ export default function Login() {
                                         onChange={handleChange}
                                         placeholder="••••••••"
                                         required
-                                        className="w-full border-none focus:outline-none text-sm"
-                                        />
+                                        className="flex-1 border-none focus:outline-none text-sm bg-transparent"
+                                    />
                                 </div>
-                                <button type="button" onClick={handleShow} className="cursor-pointer">
-                                    {!show ? <FontAwesomeIcon icon={faEye} className="text-gray-400" />
-                                           : <FontAwesomeIcon icon={faEyeSlash} className="text-gray-400" />}
+                                <button type="button" onClick={handleShow} className="cursor-pointer pl-2">
+                                    {!show
+                                        ? <FontAwesomeIcon icon={faEye} className="text-gray-400" />
+                                        : <FontAwesomeIcon icon={faEyeSlash} className="text-gray-400" />}
                                 </button>
                             </div>
                         </fieldset>
+
         
                             <div className="w-full relative flex justify-end py-1 pb-4 underline text-blue-500   ">
                                 <Link to={'/forgot_password'} className=" text-[12px]">forgot password</Link>
