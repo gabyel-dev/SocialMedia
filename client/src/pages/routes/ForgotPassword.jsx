@@ -7,6 +7,7 @@ import { faEyeSlash, faEye } from "@fortawesome/free-regular-svg-icons";
 import SuccessCard from "../../components/successfull_card";
 import NavAuth from "../../components/navbar_auth";
 import Error from "../../components/error";
+import LoaderAuth from "../../components/loaderAuth";
 
 
 export default function ForgotPassword() {
@@ -179,7 +180,7 @@ export default function ForgotPassword() {
                             className="w-full border-none focus:outline-none text-sm"
                         />
                     </div>
-                        <button type="button" onClick={handleShow1} className="cursor-pointer">
+                        <button type="button" onClick={handleShow1} tabIndex={-1} className="cursor-pointer">
                             {!show1 ? <FontAwesomeIcon icon={faEye} className="text-gray-400" />
                                    : <FontAwesomeIcon icon={faEyeSlash} className="text-gray-400" />}
                         </button>
@@ -205,7 +206,7 @@ export default function ForgotPassword() {
                             className="w-full border-none focus:outline-none text-sm"
                         />
                     </div>
-                        <button type="button" onClick={handleShow2} className="cursor-pointer">
+                        <button type="button" onClick={handleShow2} tabIndex={-1} className="cursor-pointer">
                             {!show2 ? <FontAwesomeIcon icon={faEye} className="text-gray-400" />
                                    : <FontAwesomeIcon icon={faEyeSlash} className="text-gray-400" />}
                         </button>
@@ -221,7 +222,12 @@ export default function ForgotPassword() {
                     disabled={success}
                     className={`${isResetting ? "bg-gray-500" : "bg-blue-500"} ${success && "bg-gray-500" } rounded-[7px] py-2 px-[32px] text-white cursor-pointer hover:bg-blue-600 transition`}
                 >
-                    {isResetting ? "Resetting..." : "Reset"}
+                    {isResetting ? ( 
+                                            <div className="flex items-center justify-center gap-2">
+                                                Resetting..
+                                                <LoaderAuth />
+                                            </div>
+                                        ) : ( "Reset")}
                 </button>
             </form>
 

@@ -6,6 +6,7 @@ import {faLock, faUser} from '@fortawesome/free-solid-svg-icons';
 import { faEyeSlash, faEye } from "@fortawesome/free-regular-svg-icons";
 import SuccessCard from "../../components/successfull_card";
 import NavAuth from "../../components/navbar_auth";
+import LoaderAuth from "../../components/loaderAuth";
 
 
 export default function Register() {
@@ -194,7 +195,7 @@ export default function Register() {
                                                                         : "border-red-500"}`}>
                     <legend className="text-[12px] text-gray-500 px-2">Password</legend>
                     <div className="flex items-center justify-between">
-                        <div className="flex items-center justify-center gap-2.5">
+                        <div className="flex items-center justify-center gap-2.5 w-full">
                         {<FontAwesomeIcon icon={faLock} className="text-sm text-gray-500" />}
                         <input
                             type={show1 ? "text" : "password"}
@@ -206,7 +207,7 @@ export default function Register() {
                             className="w-full border-none focus:outline-none text-sm"
                         />
                     </div>
-                        <button type="button" onClick={handleShow1} className="cursor-pointer">
+                        <button type="button" onClick={handleShow1}  tabIndex={-1} className="cursor-pointer">
                             {!show1 ? <FontAwesomeIcon icon={faEye} className="text-gray-400" />
                                    : <FontAwesomeIcon icon={faEyeSlash} className="text-gray-400" />}
                         </button>
@@ -220,7 +221,7 @@ export default function Register() {
                                                                         : "border-red-500"}`}>
                     <legend className="text-[12px] text-gray-500 px-2">Confirm Password</legend>
                     <div className="flex items-center justify-between">
-                        <div className="flex items-center justify-center gap-2.5">
+                        <div className="flex items-center justify-center gap-2.5 w-full">
                         {<FontAwesomeIcon icon={faLock} className="text-sm text-gray-500" />}
                         <input
                             type={show2 ? "text" : "password"}
@@ -231,7 +232,7 @@ export default function Register() {
                             className="w-full border-none focus:outline-none text-sm"
                         />
                     </div>
-                        <button type="button" onClick={handleShow2} className="cursor-pointer">
+                        <button type="button" onClick={handleShow2}  tabIndex={-1} className="cursor-pointer">
                             {!show2 ? <FontAwesomeIcon icon={faEye} className="text-gray-400" />
                                    : <FontAwesomeIcon icon={faEyeSlash} className="text-gray-400" />}
                         </button>
@@ -247,7 +248,12 @@ export default function Register() {
                     disabled={success}
                     className={`${isRegistering ? "bg-gray-500" : "bg-blue-500"} ${success && "bg-gray-500"} rounded-[7px] py-2 px-[32px] text-white cursor-pointer hover:bg-blue-600 transition`}
                 >
-                    {isRegistering ? "Registering..." : "Register"}
+                    {isRegistering ? ( 
+                        <div className="flex items-center justify-center gap-2">
+                            Registering..
+                            <LoaderAuth />
+                        </div>
+                    ) : ( "Register")}
                 </button>
             </form>
 
