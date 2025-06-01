@@ -10,3 +10,24 @@
     opacity: 1;
     z-index: -1;
 }
+
+.__loader__ {
+    width: 100px;
+    height: 100px;
+    border: 6px solid;
+    border-top: 6px solid blue;
+    border-radius: 50%;
+    animation: spin 1s cubic-bezier(0.2, 0.5, 0.4, 1) infinite;
+}
+
+.__loaderAuth__ {
+    width: 20px;
+    height: 20px;
+    border: 2px solid ;
+    border-top: 6px solid blue;
+    border-radius: 50%;
+    animation: spin 1s cubic-bezier(0.2, 0.5, 0.4, 1) infinite;
+}
+
+
+

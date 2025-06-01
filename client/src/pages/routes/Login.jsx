@@ -7,6 +7,7 @@ import { faEyeSlash, faEye } from "@fortawesome/free-regular-svg-icons";
 import NavAuth from "../../components/navbar_auth";
 import Error from "../../components/error";
 import { useNavigate } from "react-router-dom";
+import LoaderAuth from "../../components/loaderAuth";
 
 
 export default function Login() {
@@ -138,7 +139,15 @@ export default function Login() {
                             disabled={isLogging}
                             className={`${isLogging ? "bg-gray-500" : "bg-blue-500"} rounded-[7px] py-2 px-[32px] text-white cursor-pointer hover:bg-blue-600 transition`}
                         >
-                            {isLogging ? "Logging in..." : "Login"}
+                            {isLogging ? (
+                                <div className="flex items-center justify-center gap-2">
+                                    Logging in
+                                    <LoaderAuth />
+                                </div>
+                                ) : (
+                                "Login"
+                                )}
+
                         </button>
                     </form>
         
