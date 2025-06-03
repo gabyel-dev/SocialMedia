@@ -51,6 +51,22 @@ def login():
         user = cursor.fetchone()
 
         if user and checkPassword(user['password'], password):
+            # create_token = create_access_token(identity=str(user['id']))
+            # refresh_token = create_refresh_token(identity=str(user['id']))
+
+            # res = make_response(jsonify({
+            #     'message': 'login success',
+            #     'token': create_token,
+            #     'id': user['id']
+            # }), 200)
+
+            # res.set_cookie(
+            #     'access_token_cookie', create_token, httponly=True, secure=True, samesite='Strict'
+            # )
+
+            # res.set_cookie(
+            #     'refresh_token_cookie', refresh_token, httponly=True, secure=True, samesite='Strict'
+            # )
             return jsonify({'message': 'logged In successful'}), 200
         
         return jsonify({'error': 'Invalid username or password'}), 401
@@ -104,7 +120,7 @@ def search():
     cursor = conn.cursor()
 
     try:
-        cursor.execute('SELECT id, first_name, last_name FROM users_list WHERE first_name ILIKE %s OR last_name ILIKE %s', (f"%{query}%", f"%{query}%",))
+        cursor.execute('SELECT id, first_name, last_name FROM users_list WHERE first_name ILIKE %s OR last_name ILIKE %s', (f"%{query}%", (f"%{query}%") ))
         users = cursor.fetchall()
         print(users)
 

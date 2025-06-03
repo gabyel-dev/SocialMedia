@@ -214,7 +214,7 @@ export default function Register() {
                     </div>
                 </fieldset>
 
-                <fieldset className={`border rounded px-3 pb-3 pt-1 ${checkPassword === null
+                <fieldset className={`border rounded px-3 pb-3 pt-1  ${checkPassword === null
                                                                         ? "border-gray-300"
                                                                         : checkPassword
                                                                         ? "border-green-500" 
@@ -234,7 +234,7 @@ export default function Register() {
                     </div>
                         <button type="button" onClick={handleShow2}  tabIndex={-1} className="cursor-pointer">
                             {!show2 ? <FontAwesomeIcon icon={faEye} className="text-gray-400" />
-                                   : <FontAwesomeIcon icon={faEyeSlash} className="text-gray-400" />}
+                                    : <FontAwesomeIcon icon={faEyeSlash} className="text-gray-400" />}
                         </button>
                     </div>
                 </fieldset>
