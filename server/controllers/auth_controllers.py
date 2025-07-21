@@ -36,7 +36,6 @@ def register():
         cursor.close()
         conn.close()
 
-#login route
 @auth.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
@@ -51,31 +50,25 @@ def login():
         user = cursor.fetchone()
 
         if user and checkPassword(user['password'], password):
-            # create_token = create_access_token(identity=str(user['id']))
-            # refresh_token = create_refresh_token(identity=str(user['id']))
+            # Create a minimal user object to return (never return password!)
+            user_data = {
+                "id": user["id"],  # if you have id
+                "username": user["username"],
+            }
 
-            # res = make_response(jsonify({
-            #     'message': 'login success',
-            #     'token': create_token,
-            #     'id': user['id']
-            # }), 200)
+            response = jsonify({"message": "Login successful", "user": user_data})
+            print(user_data)
+            return response, 200
 
-            # res.set_cookie(
-            #     'access_token_cookie', create_token, httponly=True, secure=True, samesite='Strict'
-            # )
-
-            # res.set_cookie(
-            #     'refresh_token_cookie', refresh_token, httponly=True, secure=True, samesite='Strict'
-            # )
-            return jsonify({'message': 'logged In successful'}), 200
-        
         return jsonify({'error': 'Invalid username or password'}), 401
 
-    except:
-        return jsonify({'error': 'login Failed'})
+    except Exception as e:
+        print("Login error:", e)
+        return jsonify({'error': 'login Failed'}), 500
     finally:
         cursor.close()
         conn.close()
+
 
 #reset password route
 @auth.route('/reset_password', methods=['POST'])

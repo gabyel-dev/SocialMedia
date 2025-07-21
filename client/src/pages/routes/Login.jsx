@@ -8,6 +8,7 @@ import NavAuth from "../../components/navbar_auth";
 import Error from "../../components/error";
 import { useNavigate } from "react-router-dom";
 import LoaderAuth from "../../components/loaderAuth";
+import { useAuth } from "../../utils/AuthContext";
 
 
 export default function Login() {
@@ -20,6 +21,7 @@ export default function Login() {
     const [show, setShow] = useState(false)
     const [errorAppear, setErrorAppear] = useState(false)
     const navigate = useNavigate()
+    const { setUser } = useAuth();
 
     const handleShow = (e) => {
         e.preventDefault();
@@ -45,9 +47,13 @@ export default function Login() {
             })
 
             if (res.status === 200 ) {
-                console.log("login successful")
-            }
-            navigate('/home')
+    console.log("login successful");
+    setUser(res.data.user);
+    localStorage.setItem("user", JSON.stringify(res.data.user)); // <-- persist user
+    navigate('/home');
+}
+
+            
 
             
         } catch (err) {
